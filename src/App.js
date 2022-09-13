@@ -1,24 +1,26 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { Suspense } from 'react';
+import { ThemeProvider } from '@material-ui/styles';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import theme from './components/Theme';
+import CssBaseline from '@material-ui/core/CssBaseline';
+const LandingPage = React.lazy(() => import('./LandingPage'));
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
+      <Suspense fallback={<div>Loading...</div>}>
+        <BrowserRouter>
+          <Routes>
+            <Route
+              exact
+              path="/"
+              element={<LandingPage style={{ margin: 0, padding: 0 }} />}
+            />
+          </Routes>
+        </BrowserRouter>
+      </Suspense>
+    </ThemeProvider>
   );
 }
 
